@@ -38,9 +38,9 @@ public class ImageService implements IIMageService {
         }
 
         @Override
-        public Image saveImage(List<MultipartFile> files, Long productId) {
+        public List<ImageDto> saveImages(List<MultipartFile> files, Long productId) {
                 Product product = ps.getProductById(productId);
-                List<ImageDto> imageDtos = new ArrayList<>();
+                List<ImageDto> savedImageDto = new ArrayList<>();
                 for(MultipartFile file : files){
                         try{
                                 Image image = new Image();
@@ -49,15 +49,28 @@ public class ImageService implements IIMageService {
                                 image.setImage(new SerialBlob(file.getBytes()));
                                 image.setProduct(product);
 
-                                String downloadUrl = "/api/v1/images/image/download/" + image.getId();
+                                String buildDownloadUrl = "/api/v1/images/image/download/";
+                                String downloadUrl = buildDownloadUrl + image.getId();
                                 image.setDownloadUrl(downloadUrl);
+                                Image savedImage = ir.save(image);
 
+                                savedImage.setDownloadUrl(buildDownloadUrl + savedImage.getId());
+                                ir.save(savedImage);
+
+                                ImageDto imageDto = new ImageDto();
+
+                                imageDto.setImageId(savedImage.getId());
+                                imageDto.setImageName(savedImage.getFileName());
+                                imageDto.setDownloadUrl(savedImage.getDownloadUrl());
+                                savedImageDto.add(imageDto);
                         }catch(IOException | SQLException e){
                                 throw new RuntimeException(e.getMessage());
                         }
                 }
-                return null;
+                return savedImageDto;
         }
+
+
 
         @Override
         public void updateImage(MultipartFile file, Long imageId) {
