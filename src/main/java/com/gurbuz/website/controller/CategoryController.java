@@ -17,7 +17,7 @@ import static org.springframework.http.HttpStatus.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("${api.prefix}/categories")
-public class CategoryController {
+class CategoryController {
 
   private final ICategoryService cs;
 

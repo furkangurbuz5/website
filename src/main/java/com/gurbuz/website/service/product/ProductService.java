@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-class ProductService implements IProductService{
+public class ProductService implements IProductService{
         private final ProductRepository pr;
         private final CategoryRepository cr;
 
