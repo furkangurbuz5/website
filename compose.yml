@@ -1,0 +1,10 @@
+services:
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=websitedb'
+      - 'POSTGRES_PASSWORD=password'
+      - 'POSTGRES_USER=furkan'
+    ports:
+      - '54322:5432'
+
