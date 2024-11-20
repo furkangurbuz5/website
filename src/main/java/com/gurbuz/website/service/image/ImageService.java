@@ -6,12 +6,15 @@ import com.gurbuz.website.model.Image;
 import com.gurbuz.website.model.Product;
 import com.gurbuz.website.repository.ImageRepository;
 import com.gurbuz.website.service.product.IProductService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.sql.DataSource;
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +27,7 @@ public class ImageService implements IImageService {
 
 
   @Override
+  @Transactional
   public Image getImageById(Long id) {
     return ir.findById(id)
       .orElseThrow(() -> new ResourceNotFoundException("No image found with id: " + id));

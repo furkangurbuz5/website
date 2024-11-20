@@ -7,7 +7,6 @@ import com.gurbuz.website.model.Product;
 import com.gurbuz.website.request.AddProductRequest;
 import com.gurbuz.website.request.ProductUpdateRequest;
 import com.gurbuz.website.response.ApiResponse;
-import com.gurbuz.website.service.product.IProductService;
 import com.gurbuz.website.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -116,7 +115,6 @@ class ProductController {
   @GetMapping("/product/by-brand")
   public ResponseEntity<ApiResponse> getProductByBrand(@RequestParam String brand){
     try {
-
       List<Product> products = ps.getProductsByBrand(brand);
 
       if(products.isEmpty()){

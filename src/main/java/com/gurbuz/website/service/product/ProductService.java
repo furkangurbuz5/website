@@ -84,31 +84,31 @@ public class ProductService implements IProductService{
 
   @Override
   public List<Product> getProductsByCategory(String category) {
-    return pr.findByCategoryName(category);
+    return pr.findByCategoryNameIgnoreCase(category);
   }
 
   @Override
   public List<Product> getProductsByBrand(String brand) {
-    return pr.findByBrand(brand);
+    return pr.findByBrandIgnoreCase(brand);
   }
 
   @Override
   public List<Product> getProductsByCategoryAndBrand(String category, String brand) {
-    return pr.findByCategoryNameAndBrand(category, brand);
+    return pr.findByCategoryNameAndBrandIgnoreCase(category, brand);
   }
 
   @Override
   public List<Product> getProductsByName(String name) {
-    return pr.findByName(name);
+    return pr.findByNameIgnoreCase(name);
   }
 
   @Override
   public List<Product> getProductsByBrandAndName(String brand, String name) {
-    return pr.findByBrandAndName(brand, name);
+    return pr.findByBrandAndNameIgnoreCase(brand, name);
   }
 
   @Override
   public Long countProductsByBrandAndName(String brand, String name) {
-    return pr.countByBrandAndName(brand, name);
+    return pr.countByBrandAndNameIgnoreCase(brand, name);
   }
 }
