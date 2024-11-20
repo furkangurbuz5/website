@@ -1,6 +1,7 @@
 package com.gurbuz.website.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,8 +21,9 @@ public class Category {
         private Long id;
         private String name;
 
+        @JsonIgnore
         @OneToMany(mappedBy = "category")
-        List<Product> products;
+        private List<Product> products;
 
         public Category(String name){
                 this.name = name;
