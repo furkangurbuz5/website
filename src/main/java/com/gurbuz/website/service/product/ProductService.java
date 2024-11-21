@@ -1,13 +1,18 @@
 package com.gurbuz.website.service.product;
 
+import com.gurbuz.website.dto.ImageDto;
+import com.gurbuz.website.dto.ProductDto;
 import com.gurbuz.website.exceptions.ProductNotFoundException;
 import com.gurbuz.website.model.Category;
+import com.gurbuz.website.model.Image;
 import com.gurbuz.website.model.Product;
 import com.gurbuz.website.repository.CategoryRepository;
+import com.gurbuz.website.repository.ImageRepository;
 import com.gurbuz.website.repository.ProductRepository;
 import com.gurbuz.website.request.AddProductRequest;
 import com.gurbuz.website.request.ProductUpdateRequest;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +23,8 @@ import java.util.Optional;
 public class ProductService implements IProductService{
   private final ProductRepository pr;
   private final CategoryRepository cr;
+  private final ImageRepository ir;
+  private final ModelMapper modelMapper;
 
   @Override
   public Product addProduct(AddProductRequest request) {
@@ -111,4 +118,32 @@ public class ProductService implements IProductService{
   public Long countProductsByBrandAndName(String brand, String name) {
     return pr.countByBrandAndNameIgnoreCase(brand, name);
   }
+
+  @Override
+  public List<ProductDto> getConvertedProducts(List<Product> products){
+    return products.stream().map(this::convertToDto).toList();
+  }
+
+  @Override
+  public ProductDto convertToDto(Product product){
+    ProductDto productDto = modelMapper.map(product,ProductDto.class);
+    List<Image> images = ir.findByProductId(product.getId());
+    List<ImageDto> imageDtos = images.stream()
+      .map(image -> modelMapper.map(image, ImageDto.class))
+      .toList();
+    productDto.setImages(imageDtos);
+    return productDto;
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+

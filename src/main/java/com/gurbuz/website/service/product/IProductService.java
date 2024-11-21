@@ -1,5 +1,6 @@
 package com.gurbuz.website.service.product;
 
+import com.gurbuz.website.dto.ProductDto;
 import com.gurbuz.website.model.Product;
 import com.gurbuz.website.request.AddProductRequest;
 import com.gurbuz.website.request.ProductUpdateRequest;
@@ -21,4 +22,7 @@ public interface IProductService {
         List<Product> getProductsByBrandAndName(String brand, String category);
         Long countProductsByBrandAndName(String brand, String name);
 
+        List<ProductDto> getConvertedProducts(List<Product> products);
+
+        ProductDto convertToDto(Product product);
 }

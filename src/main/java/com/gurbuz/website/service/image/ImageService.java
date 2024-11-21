@@ -11,10 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.sql.DataSource;
 import javax.sql.rowset.serial.SerialBlob;
+import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +63,7 @@ public class ImageService implements IImageService {
         ImageDto imageDto = new ImageDto();
 
         imageDto.setImageId(savedImage.getId());
-        imageDto.setImageName(savedImage.getFileName());
+        imageDto.setFileName(savedImage.getFileName());
         imageDto.setDownloadUrl(savedImage.getDownloadUrl());
         savedImageDto.add(imageDto);
       }catch(IOException | SQLException e){
@@ -73,8 +72,6 @@ public class ImageService implements IImageService {
     }
     return savedImageDto;
   }
-
-
 
   @Override
   public void updateImage(MultipartFile file, Long imageId) {
